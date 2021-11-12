@@ -125,12 +125,12 @@ public class msgManage {
         Pattern replyPattern = Pattern.compile("id=(.*?)\\]");
         Pattern imagePattern = Pattern.compile("url=(.*?)\\]");
 
-        messageId = msgJson.getInteger("message_id").toString();
+        messageId = msgJson.getLong("message_id").toString();
         recallOperatorc = msgJson.getString("operator_id");
 
         // 被撤回消息
         if(recallOperatorc != null){
-            userId = msgJson.getInteger("user_id").toString();
+            userId = msgJson.getLong("user_id").toString();
             List<String> result = new ArrayList<String>();
             result.add(recallOperatorc);
             result.add(messageId);
@@ -170,7 +170,7 @@ public class msgManage {
         }
         rawMessage = rawMessage.replace(",", "，");
 
-        userId = msgJson.getJSONObject("sender").getInteger("user_id").toString();
+        userId = msgJson.getJSONObject("sender").getLong("user_id").toString();
         List<String> result = new ArrayList<String>();
         result.add(recallOperatorc);
         result.add(messageId);
