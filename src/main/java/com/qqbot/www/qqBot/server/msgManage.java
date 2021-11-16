@@ -57,7 +57,8 @@ public class msgManage {
                 List<List<String>> groupList = new LinkedList<>();
                 messageData.putList(groupId, groupList);
                 // 启动线程
-                Thread groupThread = startThread(groupId, groupQueue, groupList);
+                String groupName = configJson.getJSONObject("focusGroup").getString(groupId.toString());
+                Thread groupThread = startThread(groupId, groupQueue, groupList, groupName);
                 groupThreads.put(groupId, groupThread);
             }else groupQueue = messageData.getQueue(groupId);
             int result = groupMessageService.createTable(groupId.toString());
@@ -90,6 +91,7 @@ public class msgManage {
                     tmp.add(handleResult.get(4));
                     tmp.add(handleResult.get(5));
                     tmp.add(handleResult.get(6));
+                    tmp.add(handleResult.get(7));
 //                groupQueue.offer(JSONObject.parseArray(JSONObject.toJSONString(tmp)));
                     groupQueue.add(tmp);
                 }
@@ -191,9 +193,11 @@ public class msgManage {
 
     public Thread startThread(Integer groupId,
                             ConcurrentLinkedQueue<List<String>> groupQueue,
-                            List<List<String>> groupList){
+                            List<List<String>> groupList,
+                            String groupName){
         mainSignal.setSaveMessage(groupId, false);
         Thread task = new groupMain(limit, groupId, groupQueue, groupList, groupMessageService, mainSignal, env);
+        task.setName(groupName);
         task.start();
         return task;
     }
