@@ -7,6 +7,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
+import org.springframework.web.socket.WebSocketHandler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+
+import com.qqbot.www.qqBot.Controllers.webSocketRouter;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +19,7 @@ import java.util.List;
 @ComponentScan
 @Configuration
 public class MainConverter {
+
     @Bean
     FastJsonHttpMessageConverter fastJsonHttpMessageConverter(){
         FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();

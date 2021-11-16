@@ -30,6 +30,7 @@ public class msgManage {
     private final StampedLock stampedLock = new StampedLock();
     private final manageSignal mainSignal = new manageSignal();
     private final Map<Integer, Thread> groupThreads = new HashMap<>();
+    private final Map<String, webSocketMsg> groupWebSocketMsg = new HashMap<>();
 //    private final Map<Integer, manageSignal>
     private final ExecutorService pool = Executors.newFixedThreadPool(5);
 
@@ -56,9 +57,11 @@ public class msgManage {
                 groupQueue = messageData.getQueue(groupId);
                 List<List<String>> groupList = new LinkedList<>();
                 messageData.putList(groupId, groupList);
+                webSocketMsg groupWSM = new webSocketMsg();
+                groupWebSocketMsg.put(groupId.toString(), groupWSM);
                 // 启动线程
                 String groupName = configJson.getJSONObject("focusGroup").getString(groupId.toString());
-                Thread groupThread = startThread(groupId, groupQueue, groupList, groupName);
+                Thread groupThread = startThread(groupId, groupQueue, groupList, groupName, groupWSM);
                 groupThreads.put(groupId, groupThread);
             }else groupQueue = messageData.getQueue(groupId);
             int result = groupMessageService.createTable(groupId.toString());
@@ -194,9 +197,9 @@ public class msgManage {
     public Thread startThread(Integer groupId,
                             ConcurrentLinkedQueue<List<String>> groupQueue,
                             List<List<String>> groupList,
-                            String groupName){
+                            String groupName, webSocketMsg wsm){
         mainSignal.setSaveMessage(groupId, false);
-        Thread task = new groupMain(limit, groupId, groupQueue, groupList, groupMessageService, mainSignal, env);
+        Thread task = new groupMain(limit, groupId, groupQueue, groupList, groupMessageService, mainSignal, env, wsm);
         task.setName(groupName);
         task.start();
         return task;
@@ -204,6 +207,9 @@ public class msgManage {
 
     public Map<String, List<List<String>>> getMsgList() {
         return messageData.getMsgList();
+    }
+    public webSocketMsg getWSM(String groupId){
+        return groupWebSocketMsg.get(groupId);
     }
 
     public void saveToMysqlSignal(){
@@ -252,6 +258,7 @@ class groupMain extends Thread{
     private final ConcurrentLinkedQueue<List<String>> groupQueue;
     private final groupMessageService gms;
     private final manageSignal mySignal;
+    private final webSocketMsg wsm;
 
     Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -261,7 +268,8 @@ class groupMain extends Thread{
                      List<List<String>> groupList,
                      groupMessageService gms,
                      manageSignal mySignal,
-                     String env){
+                     String env,
+                     webSocketMsg wsm){
         this.limit = limit;
         this.groupId = groupId;
         this.groupList = groupList;
@@ -269,6 +277,7 @@ class groupMain extends Thread{
         this.gms = gms;
         this.mySignal = mySignal;
         this.env = env;
+        this.wsm = wsm;
     }
 
     @Override
@@ -343,16 +352,20 @@ class groupMain extends Thread{
                     if(groupList.get(n).get(1).equals(reply)){
                         isExist = true;
                         groupList.add(n+1, tmpMsg);
+                        wsm.put(tmpMsg);
                         break;
                     }
                 }
-                if(!isExist)
+                if(!isExist){
                     groupList.add(tmpMsg);
+                    wsm.put(tmpMsg);
+                }
             }else{
                 String lastMsg = null;
                 if(groupList.size()>0)
                     lastMsg = groupList.get(groupList.size() - 1).get(3);
                 groupList.add(tmpMsg);
+                wsm.put(tmpMsg);
                 // 复读机
                 if((!rawMessage.equals("")) && rawMessage.equals(lastMsg) && Repeater){
                     Repeater = false;
