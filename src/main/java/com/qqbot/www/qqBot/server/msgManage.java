@@ -121,7 +121,7 @@ public class msgManage {
         String imageUrl = "";
         String reply = "";
         String now = String.valueOf(new Date().getTime());
-        String userName;
+        String userName = "";
 
         Pattern replyPattern = Pattern.compile("id=(.*?)\\]");
         Pattern imagePattern = Pattern.compile("url=(.*?)\\]");
@@ -140,6 +140,7 @@ public class msgManage {
             result.add(imageUrl);
             result.add(now);
             result.add(reply);
+            result.add(userName);
             return result;
         }
 
