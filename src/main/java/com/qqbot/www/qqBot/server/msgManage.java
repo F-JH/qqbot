@@ -121,6 +121,7 @@ public class msgManage {
         String imageUrl = "";
         String reply = "";
         String now = String.valueOf(new Date().getTime());
+        String userName;
 
         Pattern replyPattern = Pattern.compile("id=(.*?)\\]");
         Pattern imagePattern = Pattern.compile("url=(.*?)\\]");
@@ -171,6 +172,10 @@ public class msgManage {
         rawMessage = rawMessage.replace(",", "，");
 
         userId = msgJson.getJSONObject("sender").getLong("user_id").toString();
+        if(msgJson.getJSONObject("sender").getString("card").equals(""))
+            userName = msgJson.getJSONObject("sender").getString("nickname");
+        else
+            userName = msgJson.getJSONObject("sender").getString("card");
         List<String> result = new ArrayList<String>();
         result.add(recallOperatorc);
         result.add(messageId);
@@ -179,6 +184,7 @@ public class msgManage {
         result.add(imageUrl);
         result.add(now);
         result.add(reply);
+        result.add(userName);
         return result;
     }
 
@@ -266,7 +272,7 @@ class groupMain extends Thread{
         boolean Repeater = true;
         int num;
         boolean isExist;
-        String recallOperator, messageId, userId, rawMessage, imageUrl, createDate, reply;
+        String recallOperator, messageId, userId, rawMessage, imageUrl, createDate, reply, userName;
         for(;;){
             // 处理 save message signal
             if(mySignal.isSaveMessage(groupId)){
@@ -293,6 +299,7 @@ class groupMain extends Thread{
             imageUrl = sample.get(4);
             createDate = sample.get(5);
             reply = sample.get(6);
+            userName = sample.get(7);
 
             // 处理撤回
             if(!recallOperator.equals("")){
@@ -323,6 +330,7 @@ class groupMain extends Thread{
             tmpMsg.add(rawMessage);
             tmpMsg.add(imageUrl);
             tmpMsg.add(createDate);
+            tmpMsg.add(userName);
 
             if(!reply.equals("") && num > 0){
                 isExist = false;

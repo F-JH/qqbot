@@ -75,7 +75,7 @@ class newMember implements noticeMethod{
                 break;
         }
         if(send){
-            JSONArray imgs = configJson.getJSONObject("welcome_group").getJSONArray("image");
+            JSONArray imgs = configJson.getJSONObject("welcome_group").getJSONObject("image").getJSONArray(groupId.toString());
             String sendMsg = String.format("[CQ:image,file=http://127.0.0.1:8080/%s]", imgs.getString((int) (Math.random() * imgs.size())));
             String url = configJson.getString("BOTROOT") + String.format("/send_group_msg?group_id=%d&message=%s", groupId, sendMsg);
             Response res = get(url);
