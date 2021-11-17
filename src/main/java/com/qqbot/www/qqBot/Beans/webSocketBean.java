@@ -34,6 +34,7 @@ public class webSocketBean implements WebSocketHandler {
                 String m = JSON.toJSONString(msg.get(i));
                 WebSocketMessage<String> s = new TextMessage(m);
                 session.sendMessage(s);
+                lastMessageId = msg.get(i).get(1);
             }
             for(;;){
                 List<String> lastOne = wsm.getLastOne();
