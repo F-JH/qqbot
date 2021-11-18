@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.qqbot.www.qqBot.mybatis.module.groupMessage;
+import org.springframework.web.socket.WebSocketSession;
 
 import java.io.File;
 import java.io.IOException;
@@ -210,6 +211,10 @@ public class msgManage {
     }
     public webSocketMsg getWSM(String groupId){
         return groupWebSocketMsg.get(groupId);
+    }
+    public void removeSession(WebSocketSession session){
+        for(webSocketMsg item:groupWebSocketMsg.values())
+            item.removeSession(session);
     }
 
     public void saveToMysqlSignal(){
