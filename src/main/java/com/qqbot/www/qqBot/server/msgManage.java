@@ -339,6 +339,10 @@ class groupMain extends Thread{
                         logger.info("处理撤回信息出现错误：", e);
                     }
                 }
+                List<String> sendRecall = new ArrayList<>();
+                sendRecall.add(recallOperator);
+                sendRecall.add(messageId);
+                wsm.put(sendRecall);
                 continue;
             }
 

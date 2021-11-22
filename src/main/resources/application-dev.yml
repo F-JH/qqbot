@@ -13,3 +13,6 @@ spring:
       hibernate:
         hbm2ddl:
           auto: update
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
