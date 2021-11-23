@@ -64,5 +64,6 @@
     "330405140",
     "961530103"
   ],
-  "BOTROOT": "http://127.0.0.1:5700"
+  "BOTROOT": "http://127.0.0.1:5700",
+  "imgUrlTemple": "https://gchat.qpic.cn/gchatpic_new/%s/%d-3212970209-%s/0?term=3"
 }

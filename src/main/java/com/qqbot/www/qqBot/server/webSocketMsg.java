@@ -14,7 +14,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class webSocketMsg {
     private List<List<String>> msgList = new CopyOnWriteArrayList<>();
     // 最多保存多少条
-    private int limit = 60;
+    private int limit = 200;
     // 巡检session列表
     private final List<WebSocketSession> inspection = new CopyOnWriteArrayList<>();
 

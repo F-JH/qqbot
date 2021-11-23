@@ -34,15 +34,11 @@ public class msgManage {
     private final Map<String, webSocketMsg> groupWebSocketMsg = new HashMap<>();
 //    private final Map<Integer, manageSignal>
     private final ExecutorService pool = Executors.newFixedThreadPool(5);
-
     @Autowired
     private groupMessageService groupMessageService;
-
     @Value("${env}")
     private String env;
-
     private final messageData messageData = new messageData();
-
     int limit;
 
     public msgManage(){
@@ -74,7 +70,7 @@ public class msgManage {
         String postType = msgJson.getString("post_type");
         List<String> handleResult;
         if(configJson.getJSONArray("post_type").contains(postType))
-             handleResult = handleMessage(msgJson);
+             handleResult = handleMessage(msgJson, configJson, groupId);
         else
             return;
         if(handleResult.get(0).equals("")){
@@ -120,9 +116,10 @@ public class msgManage {
         return limit;
     }
 
-    public List<String> handleMessage(JSONObject msgJson){
+    public List<String> handleMessage(JSONObject msgJson, JSONObject configJson, Integer groupId){
         String recallOperatorc;
-        String messageId, userId;
+        String messageId;
+        String userId = "";
         String rawMessage = "";
         String imageUrl = "";
         String reply = "";
@@ -130,10 +127,13 @@ public class msgManage {
         String userName = "";
 
         Pattern replyPattern = Pattern.compile("id=(.*?)\\]");
-        Pattern imagePattern = Pattern.compile("url=(.*?)\\]");
+        Pattern imagePattern = Pattern.compile("url=(.*?)\\,");
+        Pattern imageType = Pattern.compile("type=(.*?)\\,");
+        Pattern imageFile = Pattern.compile("file=(.*?)\\.image");
 
         messageId = msgJson.getLong("message_id").toString();
         recallOperatorc = msgJson.getString("operator_id");
+        String img;
 
         // 被撤回消息
         if(recallOperatorc != null){
@@ -151,6 +151,8 @@ public class msgManage {
         }
 
         recallOperatorc = "";
+        userId = msgJson.getJSONObject("sender").getLong("user_id").toString();
+
         rawMessage = msgJson.getString("message");
         rawMessage = rawMessage.replace("\n", "");
         rawMessage = rawMessage.replace("\r", "");
@@ -167,18 +169,29 @@ public class msgManage {
             }
             // image 包含一个或多个图片
             if(s.contains("image")){
-                Matcher imageCher = imagePattern.matcher(s);
-                if(imageCher.find())
+                Matcher typeCher = imageType.matcher(s);
+                if(typeCher.find()){
+                    // 闪照
+                    Matcher fileCher = imageFile.matcher(s);
+                    fileCher.find();    // 一定能匹配上
+                    String file = fileCher.group(1);
+                    file = file.toUpperCase();
+                    imageUrl = String.format(configJson.getString("imgUrlTemple"), userId, groupId, file);
+                }else{
+                    // 普通照片
+                    Matcher imageCher = imagePattern.matcher(s);
+                    imageCher.find();
                     if(imageUrl.equals(""))
                         imageUrl = imageCher.group(1);
                     else
                         imageUrl = imageUrl + "\n" + imageCher.group(1);
+                }
             }
             rawMessage = rawMessage.replace(s, "");
         }
         rawMessage = rawMessage.replace(",", "，");
 
-        userId = msgJson.getJSONObject("sender").getLong("user_id").toString();
+
         if(msgJson.getJSONObject("sender").getString("card").equals(""))
             userName = msgJson.getJSONObject("sender").getString("nickname");
         else
