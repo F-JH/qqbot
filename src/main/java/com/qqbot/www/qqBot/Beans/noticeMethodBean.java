@@ -52,6 +52,11 @@ class newMember implements noticeMethod{
         boolean send = false;
         if(welcomeUsers == null)
             return "This group is not focus on.";
+        if(welcomeUsers.size() == 0){
+            // 没有设置长老则默认发送
+            isWelcome = true;
+            send = true;
+        }
         while(!isWelcome){
             int num;
             List<List<String>> groupList = manage.getMsgList().get(groupId.toString());
