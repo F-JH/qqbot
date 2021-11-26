@@ -3,7 +3,7 @@ server:
   tomcat:
     max-http-header-size: 81920
 logging:
-  config: resources/config/logback.xml
+  config: qqbot/src/main/resources/config/logback.xml
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/qqbot?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
