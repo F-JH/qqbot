@@ -386,33 +386,51 @@ class groupMain extends Thread{
                 String lastMsg = null;
                 if(groupList.size()>0)
                     lastMsg = groupList.get(groupList.size() - 1).get(3);
+
+
+                JSONObject configJson;
+                File file = new File(envGet.getByEnv(env) + "config/config.json");
+                try{
+                    String data = FileUtils.readFileToString(file);
+                    configJson = JSON.parseObject(data);
+                }catch(IOException e){
+                    logger.error("读取配置文件出错，取消复读: ", e);
+                    continue;
+                }
+
+                boolean same = isRepeate(rawMessage, configJson);
+                // 添加进缓存
                 groupList.add(tmpMsg);
                 wsm.put(tmpMsg);
+
                 // 复读机
-                if((!rawMessage.equals("")) && rawMessage.equals(lastMsg) && Repeater){
+                if((!rawMessage.equals("")) && same && Repeater){
                     Repeater = false;
-                    File file = new File(envGet.getByEnv(env) + "config/config.json");
-                    JSONObject configJson;
-                    try{
-                        String data = FileUtils.readFileToString(file);
-                        configJson = JSON.parseObject(data);
-                    }catch(IOException e){
-                        logger.error("读取配置文件出错，取消复读: ", e);
-                        continue;
-                    }
-                    if(configJson.getJSONArray("Repeater").contains(groupId.toString())){
-                        String url = String.format("http://127.0.0.1:5700/send_group_msg?group_id=%d&message=%s", groupId, rawMessage);
-                        Response res = post(url);
-                        System.out.println("\033[1;31m" +
-                                String.join("", Collections.nCopies(40, "-")) +
-                                String.format("复读鸡启动：%d|%d|%s", res.statusCode(), groupId, rawMessage) +
-                                String.join("", Collections.nCopies(40, "-")) +
-                                "\033[0m");
-                    }
+                    String url = String.format("http://127.0.0.1:5700/send_group_msg?group_id=%d&message=%s", groupId, rawMessage);
+                    Response res = post(url);
+                    System.out.println("\033[1;31m" +
+                            String.join("", Collections.nCopies(40, "-")) +
+                            String.format("复读鸡启动：%d|%d|%s", res.statusCode(), groupId, rawMessage) +
+                            String.join("", Collections.nCopies(40, "-")) +
+                            "\033[0m");
                 }else if(!rawMessage.equals(lastMsg))
                     Repeater = true;
             }
         }
+    }
+
+    private boolean isRepeate(String rawMessage, JSONObject configJson){
+        Integer num = configJson.getJSONObject("Repeater").getInteger(groupId.toString());
+        if(num == null)
+            return false;
+        num = num - 1;
+        if(groupList.size() < num)
+            return false;
+        for(int i=0; i<num; i++){
+            if(!groupList.get(groupList.size() - 1 - i).get(3).equals(rawMessage))
+                return false;
+        }
+        return true;
     }
 
     private void saveMsgToMysql(int num){
