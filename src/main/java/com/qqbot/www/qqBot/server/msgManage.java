@@ -420,6 +420,8 @@ class groupMain extends Thread{
     }
 
     private boolean isRepeate(String rawMessage, JSONObject configJson){
+        if(rawMessage.contains("我") && rawMessage.contains("傻"))
+            return false;
         Integer num = configJson.getJSONObject("Repeater").getInteger(groupId.toString());
         if(num == null)
             return false;
