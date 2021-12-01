@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  tomcat:
+    max-http-header-size: 81920
+logging:
+  config: qqbot/bot-api/src/main/resources/config/logback.xml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/qqbot?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: 972583048
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update

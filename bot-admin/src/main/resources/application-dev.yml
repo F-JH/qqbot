@@ -1,0 +1,22 @@
+server:
+  port: 8181
+logging:
+  config: bot-admin/src/main/resources/config/logback.xml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/qqbotAdmin?characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 972583048
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+  security:
+    user:
+      name: fujuhong
+      password: 972583048
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

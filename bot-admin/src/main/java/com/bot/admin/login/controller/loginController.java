@@ -1,0 +1,13 @@
+package com.bot.admin.login.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/hello")
+public class loginController {
+    @RequestMapping()
+    public String login(){
+        return "login";
+    }
+}

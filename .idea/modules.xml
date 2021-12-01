@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/bot-admin/bot-admin.iml" filepath="$PROJECT_DIR$/bot-admin/bot-admin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bot-api/bot-api.iml" filepath="$PROJECT_DIR$/bot-api/bot-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/qqbot.iml" filepath="$PROJECT_DIR$/qqbot.iml" />
     </modules>
   </component>

@@ -24,11 +24,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591">
-        <schema name="shopline_event" object-types="table, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591">
@@ -61,11 +57,14 @@ where
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_codeless_event_field" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_event_field" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_event_basic" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_metadata.s_data_permission_approve" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_metadata.s_data_permission_strategy_node" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_audit_node" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_field" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_event_version" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_field_value" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_audit_config" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_metadata.s_data_permission_apply" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
