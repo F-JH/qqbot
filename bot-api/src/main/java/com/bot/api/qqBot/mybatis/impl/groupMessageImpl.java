@@ -1,6 +1,6 @@
 package com.bot.api.qqBot.mybatis.impl;
 
-import com.bot.api.qqBot.mybatis.dao.groupMessageMapper;
+import com.bot.api.qqBot.mybatis.dao.qqbot.groupMessageMapper;
 import com.bot.api.qqBot.mybatis.module.groupMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

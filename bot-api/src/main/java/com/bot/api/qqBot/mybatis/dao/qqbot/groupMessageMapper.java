@@ -1,4 +1,4 @@
-package com.bot.api.qqBot.mybatis.dao;
+package com.bot.api.qqBot.mybatis.dao.qqbot;
 
 import org.apache.ibatis.annotations.*;
 import com.bot.api.qqBot.mybatis.module.groupMessage;
