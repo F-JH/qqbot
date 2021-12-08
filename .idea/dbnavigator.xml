@@ -24,27 +24,32 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591">
+        <schema name="shopline_event" object-types="table, view" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591">
       <console name="JoyyDataTest" type="STANDARD" schema="shopline_event" session="Main"><![CDATA[--use shopline_event;
-select
-    eb.event_name, en.event_version, en.deleted, en.status, en.result
-from
-    et_code_audit_node en
-        left join
-    et_code_event_basic eb
-        on eb.id = en.event_id
-where
-    eb.event_name='测试流程';
+--
+--insert into ex_data_stats_event (app_id, event_name, type, inbound_total, `date`)
+--values
+--('smart_landingpage_td', 'ShopCar', 'code', 322, '2021-12-02'),
+--('smart_landingpage_td', 'ShopCar', 'code', 567, '2021-12-03'),
+--('smart_landingpage_td', 'ShopCar', 'code', 678, '2021-12-04'),
+--('smart_landingpage_td', 'ShopCar', 'code', 1024, '2021-12-05');
 
-select
-    *
-from 
-    et_code_event_basic
-where
-    page='-999' and module='102' and component='-999' and action_type='101';]]></console>
+--select event_display_name, event_flag, page, page_description from et_code_event_basic where application_id=18;
+--select * from et_code_field where application_id=18 and `group`='expand';
+
+
+insert into ex_data_stats_application (app_id, loss_total, inbound_total, arrive_rate, `date`)
+values
+('smart_landingpage_td', 1336, 83218, 0.933, '2021-09-01'),
+('smart_landingpage_td', 1113, 99999, 0.901, '2021-10-01'),
+('smart_landingpage_td', 1336, 67932, 0.910, '2021-12-01');]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
@@ -54,16 +59,25 @@ where
     <connection id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
-    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_codeless_event_field" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_event_field" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_event_basic" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_data_stats_event" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_metadata.s_data_permission_approve" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_metadata.s_data_permission_strategy_node" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_audit_node" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_field" active-filter-id="EMPTY_FILTER" />
-    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_event_version" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_field_value" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_audit_config" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_event_report_field_validate_info" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_codeless_event_field" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_event_basic" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_event_v2" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_metadata.s_data_permission_strategy_node" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_event_validate_info" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_audit_node" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_event_report_field" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_act" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_report_field_name" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_field" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.et_code_event_version" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_application" active-filter-id="EMPTY_FILTER" />
+    <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_event.ex_data_stats_application" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" dataset="shopline_metadata.s_data_permission_apply" active-filter-id="EMPTY_FILTER" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">

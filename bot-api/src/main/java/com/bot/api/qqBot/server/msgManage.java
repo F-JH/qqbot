@@ -403,10 +403,17 @@ class groupMain extends Thread{
                 groupList.add(tmpMsg);
                 wsm.put(tmpMsg);
 
-                // 复读机
+                // 复读机 || 打断鸡
                 if((!rawMessage.equals("")) && same && Repeater){
                     Repeater = false;
-                    String url = String.format("http://127.0.0.1:5700/send_group_msg?group_id=%d&message=%s", groupId, rawMessage);
+                    String sendMessage;
+                    JSONObject groupRepeater = configJson.getJSONObject("Repeater").getJSONObject(groupId.toString());
+                    if(groupRepeater.getBoolean("interOrRepeat"))
+                        sendMessage = groupRepeater.getString("interruptMsg");
+                    else
+                        sendMessage = rawMessage;
+
+                    String url = String.format("http://127.0.0.1:5700/send_group_msg?group_id=%d&message=%s", groupId, sendMessage);
                     Response res = post(url);
                     System.out.println("\033[1;31m" +
                             String.join("", Collections.nCopies(40, "-")) +
@@ -422,7 +429,7 @@ class groupMain extends Thread{
     private boolean isRepeate(String rawMessage, JSONObject configJson){
         if(rawMessage.contains("我") && rawMessage.contains("傻"))
             return false;
-        Integer num = configJson.getJSONObject("Repeater").getInteger(groupId.toString());
+        Integer num = configJson.getJSONObject("Repeater").getJSONObject(groupId.toString()).getInteger("time");
         if(num == null)
             return false;
         num = num - 1;
