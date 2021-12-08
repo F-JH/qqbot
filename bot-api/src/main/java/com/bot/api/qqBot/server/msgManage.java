@@ -407,17 +407,22 @@ class groupMain extends Thread{
                 if((!rawMessage.equals("")) && same && Repeater){
                     Repeater = false;
                     String sendMessage;
+                    String machine;
                     JSONObject groupRepeater = configJson.getJSONObject("Repeater").getJSONObject(groupId.toString());
-                    if(groupRepeater.getBoolean("interOrRepeat"))
+                    if(groupRepeater.getBoolean("interOrRepeat")){
                         sendMessage = groupRepeater.getString("interruptMsg");
-                    else
+                        machine = "打断鸡";
+                    }
+                    else{
                         sendMessage = rawMessage;
+                        machine = "复读鸡";
+                    }
 
                     String url = String.format("http://127.0.0.1:5700/send_group_msg?group_id=%d&message=%s", groupId, sendMessage);
                     Response res = post(url);
                     System.out.println("\033[1;31m" +
                             String.join("", Collections.nCopies(40, "-")) +
-                            String.format("复读鸡启动：%d|%d|%s", res.statusCode(), groupId, rawMessage) +
+                            String.format("%s启动：%d|%d|%s", machine, res.statusCode(), groupId, sendMessage) +
                             String.join("", Collections.nCopies(40, "-")) +
                             "\033[0m");
                 }else if(!rawMessage.equals(lastMsg))
