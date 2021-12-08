@@ -434,9 +434,10 @@ class groupMain extends Thread{
     private boolean isRepeate(String rawMessage, JSONObject configJson){
         if(rawMessage.contains("我") && rawMessage.contains("傻"))
             return false;
-        Integer num = configJson.getJSONObject("Repeater").getJSONObject(groupId.toString()).getInteger("time");
-        if(num == null)
+        JSONObject ReGroup = configJson.getJSONObject("Repeater").getJSONObject(groupId.toString());
+        if(ReGroup == null)
             return false;
+        Integer num = ReGroup.getInteger("time");
         num = num - 1;
         if(groupList.size() < num)
             return false;
