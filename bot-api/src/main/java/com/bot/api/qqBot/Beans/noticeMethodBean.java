@@ -114,7 +114,7 @@ class newMember implements noticeMethod{
 class memberLeave implements noticeMethod{
     @Override
     public String run(JSONObject msg, JSONObject configJson, Integer groupId, msgManage manage){
-        String user_id = msg.getString("user_id");
+        String user_id = msg.getLong("user_id").toString();
         System.out.println(
                 "\033[1;31m" +
                  configJson.getJSONObject("focusGroup").getString(groupId.toString()) +
@@ -122,6 +122,7 @@ class memberLeave implements noticeMethod{
         botApi bot = new botApi(configJson.getString("BOTROOT"));
         String message;
 
+        // 获取离开者信息
         String name;
         JSONObject data = bot.getGroupUser(groupId.toString(), user_id);
         if(data.getString("status").equals("ok")){
@@ -136,9 +137,13 @@ class memberLeave implements noticeMethod{
         if(msg.getString("sub_type").equals("leave")){
             message = String.format("【%s】离开了我们~", name);
         }else{
-            message = String.format("【%s】被送走了~", name);
+            String operator = msg.getLong("operator_id").toString();
+            JSONObject res = bot.getGroupUser(groupId.toString(), operator);
+            String operatorName = res.getJSONObject("data").getString("card");
+            if(operatorName.equals(""))
+                operatorName = res.getJSONObject("data").getString("nickname");
+            message = String.format("【%s】被【%s】送走了~", name, operatorName);
         }
-
         bot.sendGroupMsg(groupId.toString(), message);
         return "group decrease";
     }
