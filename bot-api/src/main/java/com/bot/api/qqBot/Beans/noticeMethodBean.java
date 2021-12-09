@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
+import com.bot.api.qqBot.scripts.botApi;
 
 import java.util.*;
 
@@ -81,9 +82,14 @@ class newMember implements noticeMethod{
         }
         if(send){
             JSONArray imgs = configJson.getJSONObject("welcome_group").getJSONObject("image").getJSONArray(groupId.toString());
-            String sendMsg = String.format("[CQ:image,file=http://127.0.0.1:8080/%s]", imgs.getString((int) (Math.random() * imgs.size())));
-            String url = configJson.getString("BOTROOT") + String.format("/send_group_msg?group_id=%d&message=%s", groupId, sendMsg);
-            Response res = get(url);
+            String img = imgs.getString((int) (Math.random() * imgs.size()));
+            if(img == null)
+                return "should set images";
+            botApi bot = new botApi(configJson.getString("BOTROOT"));
+            Response res = bot.sendGroupImage(groupId.toString(), img);
+//            String sendMsg = String.format("[CQ:image,file=http://127.0.0.1:8080/%s]", imgs.getString());
+//            String url = configJson.getString("BOTROOT") + String.format("/send_group_msg?group_id=%d&message=%s", groupId, sendMsg);
+//            Response res = get(url);
             System.out.println(
                     "\033[1;31m"+
                     String.join("", Collections.nCopies(40, "-")) +
@@ -112,6 +118,13 @@ class memberLeave implements noticeMethod{
                 "\033[1;31m" +
                  configJson.getJSONObject("focusGroup").getString(groupId.toString()) +
                  "有人跑路："+ msg.getString("user_id") + "\033[0m");
+        botApi bot = new botApi(configJson.getString("BOTROOT"));
+        String message;
+        if(msg.getString("sub_type").equals("kick"))
+            message = String.format("【%s】被送走了~", msg.getString("user_id"));
+        else
+            message = String.format("【%s】离开了我们~", msg.getString("user_id"));
+        bot.sendGroupMsg(groupId.toString(), message);
         return "group decrease";
     }
 }

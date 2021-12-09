@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.bot.api.qqBot.mybatis.module.groupMessage;
 import org.springframework.web.socket.WebSocketSession;
+import com.bot.api.qqBot.scripts.botApi;
 
 import java.io.File;
 import java.io.IOException;
@@ -399,6 +400,7 @@ class groupMain extends Thread{
                     continue;
                 }
 
+                botApi bot = new botApi(configJson.getString("BOTROOT"));
                 boolean same = isRepeate(rawMessage, configJson);
                 // 添加进缓存
                 groupList.add(tmpMsg);
@@ -420,8 +422,9 @@ class groupMain extends Thread{
                         machine = "复读鸡";
                     }
 
-                    String url = String.format("http://127.0.0.1:5700/send_group_msg?group_id=%d&message=%s", groupId, sendMessage);
-                    Response res = post(url);
+//                    String url = String.format("http://127.0.0.1:5700/send_group_msg?group_id=%d&message=%s", groupId, sendMessage);
+//                    Response res = post(url);
+                    Response res = bot.sendGroupMsg(groupId.toString(), sendMessage);
                     System.out.println("\033[1;31m" +
                             String.join("", Collections.nCopies(40, "-")) +
                             String.format("%s启动：%d|%d|%s", machine, res.statusCode(), groupId, sendMessage) +
