@@ -13,7 +13,7 @@ import java.util.List;
 
 @ComponentScan
 @Configuration
-public class Converter {
+public class fastJsonConverter {
 
     @Bean
     FastJsonHttpMessageConverter fastJsonHttpMessageConverter(){

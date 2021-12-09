@@ -14,10 +14,10 @@ spring:
       hibernate:
         hbm2ddl:
           auto: update
-  security:
-    user:
-      name: fujuhong
-      password: 972583048
+#  security:
+#    user:
+#      name: fujuhong
+#      password: 972583048
 mybatis:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
