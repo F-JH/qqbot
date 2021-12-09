@@ -114,16 +114,31 @@ class newMember implements noticeMethod{
 class memberLeave implements noticeMethod{
     @Override
     public String run(JSONObject msg, JSONObject configJson, Integer groupId, msgManage manage){
+        String user_id = msg.getString("user_id");
         System.out.println(
                 "\033[1;31m" +
                  configJson.getJSONObject("focusGroup").getString(groupId.toString()) +
-                 "有人跑路："+ msg.getString("user_id") + "\033[0m");
+                 "有人跑路："+ user_id + "\033[0m");
         botApi bot = new botApi(configJson.getString("BOTROOT"));
         String message;
-        if(msg.getString("sub_type").equals("kick"))
-            message = String.format("【%s】被送走了~", msg.getString("user_id"));
-        else
-            message = String.format("【%s】离开了我们~", msg.getString("user_id"));
+
+        String name;
+        JSONObject data = bot.getGroupUser(groupId.toString(), user_id);
+        if(data.getString("status").equals("ok")){
+            name = data.getJSONObject("data").getString("card");
+            if(name.equals(""))
+                name = data.getJSONObject("data").getString("nickname");
+        }else{
+            data = bot.getStrangerInfo(user_id);
+            name = data.getJSONObject("data").getString("nickname");
+        }
+
+        if(msg.getString("sub_type").equals("leave")){
+            message = String.format("【%s】离开了我们~", name);
+        }else{
+            message = String.format("【%s】被送走了~", name);
+        }
+
         bot.sendGroupMsg(groupId.toString(), message);
         return "group decrease";
     }
