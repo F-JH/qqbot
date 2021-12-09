@@ -64,13 +64,21 @@
     "330405140": {
       "time": 5,
       "interOrRepeat": true,
-      "interruptMsg": "诶~打断一下 (此消息由先进的打断鸡发送)",
+      "interruptMsg": [
+        "诶~打断一下 (此消息由打断鸡发送)",
+        "打断复读~ (此消息由打断鸡发送)",
+        "人类的本质是复读机? (此消息由打断鸡发送)"
+      ],
       "注释": "interOrRepeat: true为打断鸡，false为复读机,打断鸡消息为interruptMsg"
     },
     "961530103": {
       "time": 3,
       "interOrRepeat": true,
-      "interruptMsg": "诶~打断一下 (此消息由先进的打断鸡发送)",
+      "interruptMsg": [
+        "诶~打断一下 (此消息由打断鸡发送)",
+        "打断复读~ (此消息由打断鸡发送)",
+        "人类的本质是复读机? (此消息由打断鸡发送)"
+      ],
       "注释": "interOrRepeat: true为打断鸡，false为复读机,打断鸡消息为interruptMsg"
     }
   },

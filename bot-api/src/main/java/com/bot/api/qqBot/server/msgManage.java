@@ -1,6 +1,7 @@
 package com.bot.api.qqBot.server;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bot.api.qqBot.envGet;
 import com.bot.api.qqBot.mybatis.service.groupMessageService;
@@ -410,7 +411,8 @@ class groupMain extends Thread{
                     String machine;
                     JSONObject groupRepeater = configJson.getJSONObject("Repeater").getJSONObject(groupId.toString());
                     if(groupRepeater.getBoolean("interOrRepeat")){
-                        sendMessage = groupRepeater.getString("interruptMsg");
+                        JSONArray interruptMsgs = groupRepeater.getJSONArray("interruptMsg");
+                        sendMessage = interruptMsgs.getString((int) (Math.random() * interruptMsgs.size()));
                         machine = "打断鸡";
                     }
                     else{
