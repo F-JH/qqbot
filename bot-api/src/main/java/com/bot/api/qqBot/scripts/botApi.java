@@ -12,7 +12,7 @@ public class botApi {
     private final String botRoot;
     private static final String groupUrl = "/send_group_msg";
     private static final String groupMember = "/get_group_member_info";
-    private static final String getStranger = "get_stranger_info";
+    private static final String getStranger = "/get_stranger_info";
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
