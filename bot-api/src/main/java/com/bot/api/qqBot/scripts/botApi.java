@@ -38,16 +38,14 @@ public class botApi {
     }
 
     public JSONObject getGroupUser(String groupId, String user_id){
-        logger.info(String.format("get group member: %s : %s", groupId, user_id));
         Response res = get(botRoot + groupMember + String.format("?group_id=%s&user_id=%s", groupId, user_id));
-        String data = res.getBody().toString();
-        logger.info(String.format("Get res data: %s", data));
+        String data = res.getBody().asString();
         return JSON.parseObject(data);
     }
 
     public JSONObject getStrangerInfo(String user_id){
         Response res = get(botRoot + getStranger + String.format("?user_id=%s", user_id));
-        String data = res.getBody().toString();
+        String data = res.getBody().asString();
         return JSON.parseObject(data);
     }
 }
