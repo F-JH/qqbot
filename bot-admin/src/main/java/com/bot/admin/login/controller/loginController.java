@@ -4,10 +4,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/hello")
+@RequestMapping
 public class loginController {
-    @RequestMapping()
+    @RequestMapping("/hello")
     public String login(){
         return "login";
+    }
+
+    @RequestMapping("/love")
+    public String love(){
+        return "fujuhong love yangyue";
+    }
+
+    @RequestMapping("/admin/hello")
+    public String admin(){
+        return "admin";
+    }
+
+    @RequestMapping("/user/hello")
+    public String user(){
+        return "user";
     }
 }

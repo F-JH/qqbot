@@ -3,6 +3,8 @@ package com.bot.api.qqBot.scripts;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import io.restassured.response.Response;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static io.restassured.RestAssured.*;
 
@@ -10,7 +12,9 @@ public class botApi {
     private final String botRoot;
     private static final String groupUrl = "/send_group_msg";
     private static final String groupMember = "/get_group_member_info";
-    private static final String getStranger = "get_stranger_info";
+    private static final String getStranger = "/get_stranger_info";
+
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     public botApi(String botRoot){
         this.botRoot = botRoot;
@@ -35,13 +39,13 @@ public class botApi {
 
     public JSONObject getGroupUser(String groupId, String user_id){
         Response res = get(botRoot + groupMember + String.format("?group_id=%s&user_id=%s", groupId, user_id));
-        String data = res.getBody().toString();
+        String data = res.getBody().asString();
         return JSON.parseObject(data);
     }
 
     public JSONObject getStrangerInfo(String user_id){
         Response res = get(botRoot + getStranger + String.format("?user_id=%s", user_id));
-        String data = res.getBody().toString();
+        String data = res.getBody().asString();
         return JSON.parseObject(data);
     }
 }
