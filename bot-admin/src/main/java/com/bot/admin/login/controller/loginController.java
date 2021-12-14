@@ -11,6 +11,11 @@ public class loginController {
         return "login";
     }
 
+    @RequestMapping("/love")
+    public String love(){
+        return "fujuhong love yangyue";
+    }
+
     @RequestMapping("/admin/hello")
     public String admin(){
         return "admin";

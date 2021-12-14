@@ -1,4 +1,4 @@
-package com.bot.admin.login.user;
+package com.bot.admin.login.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
