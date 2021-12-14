@@ -11,7 +11,7 @@ public class loginController {
         return "login";
     }
 
-    @RequestMapping("/love")
+    @RequestMapping("/index")
     public String love(){
         return "fujuhong love yangyue";
     }

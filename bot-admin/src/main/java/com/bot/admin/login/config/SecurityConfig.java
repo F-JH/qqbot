@@ -81,6 +81,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/hello")
                 .permitAll()
                 .and()
+                .rememberMe()
+                .and()
                 .csrf().disable();
         http.addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
     }
