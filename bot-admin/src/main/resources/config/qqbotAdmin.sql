@@ -30,6 +30,10 @@ create table if not exists user_role(
 
 --删除表
 --drop table user_role, role, authorities, users;
+--清空表
+delete from role;
+delete from user_role;
+delete from users;
 
 --初始化role
 insert into role(role_name, role_name_zh) values('ROLE_admin', '管理员'), ('ROLE_user', '普通用户');

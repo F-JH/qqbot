@@ -15,7 +15,7 @@ public class manager implements UserDetails {
 
     private List<Role> roles;
 
-    private Set<GrantedAuthority> authorities;
+//    private Set<GrantedAuthority> authorities;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;

@@ -19,13 +19,13 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -43,9 +43,6 @@ import java.util.List;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DataSource adminDataSource;
-
-    @Autowired
     UserService userService;
 
     @Autowired
@@ -54,9 +51,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDao userDao;
 
+    @Autowired
+    PasswordEncoder encoder;
+
     @Bean
     PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+//        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Override
@@ -72,18 +73,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
-                .antMatchers("/admin/**").hasRole("admin")
-                .antMatchers("/user/**").hasRole("user")
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/admin/**").hasRole("admin")
+                    .antMatchers("/user/**").hasRole("user")
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginProcessingUrl("/session")
-                .defaultSuccessUrl("/hello")
-                .permitAll()
-                .and()
+                    .defaultSuccessUrl("/hello")
+                    .permitAll()
+                    .and()
                 .rememberMe()
-                .and()
-                .csrf().disable();
+                    .key("qqbotAdmin")
+                    .and()
+                .csrf()
+                    .disable();
         http.addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
@@ -137,31 +139,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         });
         loginFilter.setAuthenticationManager(authenticationManagerBean());
         loginFilter.setFilterProcessesUrl("/session");
+
+        //TokenBasedRememberMeServices 里获取remember-me的方法只有 getParameter ，所以在不自定义TokenBasedRememberMeServices的情况下，需要在url上加上参数 ?remember-me=on
+        TokenBasedRememberMeServices tokenBasedRememberMeServices = new TokenBasedRememberMeServices("qqbotAdmin", userService);
+        tokenBasedRememberMeServices.setTokenValiditySeconds(172800); // 令牌有效期两天
+        loginFilter.setRememberMeServices(tokenBasedRememberMeServices);
+//        loginFilter.doFilter();
         return loginFilter;
     }
-
-//    @Bean
-//    protected UserDetailsService userDetailsService() {
-//        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-//        manager.createUser(User.withUsername("fujuhong").password("972583048").roles("admin").build());
-//        manager.createUser(User.withUsername("yangyue").password("fujuhong").roles("user").build());
-//        manager.createUser(User.withUsername("joyy").password("test").roles("normal").build());
-//        return manager;
-//    }
-
-//    @Override
-//    @Bean
-//    protected UserDetailsService userDetailsService(){
-//        JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
-//        jdbcUserDetailsManager.setDataSource(adminDataSource);
-//        if(!jdbcUserDetailsManager.userExists("fujuhong")){
-//            jdbcUserDetailsManager.createUser(User.withUsername("fujuhong").password("972583048").roles("admin").build());
-//        }
-//        if(!jdbcUserDetailsManager.userExists("yangyue")){
-//            jdbcUserDetailsManager.createUser(User.withUsername("yangyue").password("fujuhong").roles("user").build());
-//        }
-//        return jdbcUserDetailsManager;
-//    }
 
     @Override
     @Bean
@@ -187,7 +172,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         manager u1 = new manager();
         u1.setUsername("fujuhong");
-        u1.setPassword("972583048");
+        u1.setPassword(encoder.encode("972583048"));
         u1.setNickname("半夏");
         u1.setAccountNonExpired(true);
         u1.setAccountNonLocked(true);
@@ -213,7 +198,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         manager u2 = new manager();
         u2.setUsername("yangyue");
-        u2.setPassword("fujuhong");
+        u2.setPassword(encoder.encode("fujuhong"));
         u2.setNickname("杨越");
         u2.setAccountNonExpired(true);
         u2.setAccountNonLocked(true);
