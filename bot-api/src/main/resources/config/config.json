@@ -65,9 +65,9 @@
       "time": 5,
       "interOrRepeat": true,
       "interruptMsg": [
-        "【打断鸡】诶~打断一下",
+        "【打断鸡】臭小子，就算是打断鸡也会累的！",
         "【打断鸡】打断复读~",
-        "打断施法！",
+        "【打断鸡】打 断 施 法！",
         "【打断鸡】人类的本质是复读机?"
       ],
       "注释": "interOrRepeat: true为打断鸡，false为复读机,打断鸡消息为interruptMsg"
