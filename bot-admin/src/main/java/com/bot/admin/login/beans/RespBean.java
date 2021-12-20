@@ -3,7 +3,7 @@ package com.bot.admin.login.beans;
 public class RespBean {
     private Integer status;
     private String msg;
-    private Object obj;
+    private Object userInfo;
 
     public static RespBean build() {
         return new RespBean();
@@ -13,25 +13,25 @@ public class RespBean {
         return new RespBean(200, msg, null);
     }
 
-    public static RespBean ok(String msg, Object obj) {
-        return new RespBean(200, msg, obj);
+    public static RespBean ok(String msg, Object userInfo) {
+        return new RespBean(200, msg, userInfo);
     }
 
     public static RespBean error(String msg) {
         return new RespBean(500, msg, null);
     }
 
-    public static RespBean error(String msg, Object obj) {
-        return new RespBean(500, msg, obj);
+    public static RespBean error(String msg, Object userInfo) {
+        return new RespBean(500, msg, userInfo);
     }
 
     private RespBean() {
     }
 
-    private RespBean(Integer status, String msg, Object obj) {
+    private RespBean(Integer status, String msg, Object userInfo) {
         this.status = status;
         this.msg = msg;
-        this.obj = obj;
+        this.userInfo = userInfo;
     }
 
     public Integer getStatus() {
@@ -52,12 +52,12 @@ public class RespBean {
         return this;
     }
 
-    public Object getObj() {
-        return obj;
+    public Object getUserInfo() {
+        return userInfo;
     }
 
-    public RespBean setObj(Object obj) {
-        this.obj = obj;
+    public RespBean setObj(Object userInfo) {
+        this.userInfo = userInfo;
         return this;
     }
 }

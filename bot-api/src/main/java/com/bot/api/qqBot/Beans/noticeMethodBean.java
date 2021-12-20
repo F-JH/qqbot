@@ -122,6 +122,12 @@ class memberLeave implements noticeMethod{
         botApi bot = new botApi(configJson.getString("BOTROOT"));
         String message;
 
+        // 根据配置判断是否发消息
+        JSONObject memberLeaveConfig = configJson.getJSONObject("memberLeave");
+        JSONObject groupConfig = memberLeaveConfig.getJSONObject(groupId.toString());
+        if(groupConfig == null)
+            return "do not send message";
+
         // 获取离开者信息
         String name;
         JSONObject data = bot.getGroupUser(groupId.toString(), user_id);
@@ -135,14 +141,16 @@ class memberLeave implements noticeMethod{
         }
 
         if(msg.getString("sub_type").equals("leave")){
-            message = String.format("【%s】离开了我们~", name);
+            String leaveTemple = groupConfig.getString("leaveTemple");
+            message = String.format(leaveTemple, name);
         }else{
             String operator = msg.getLong("operator_id").toString();
             JSONObject res = bot.getGroupUser(groupId.toString(), operator);
             String operatorName = res.getJSONObject("data").getString("card");
             if(operatorName.equals(""))
                 operatorName = res.getJSONObject("data").getString("nickname");
-            message = String.format("【%s】被【%s】送走了~", name, operatorName);
+            String kickTemple = groupConfig.getString("kickTemple");
+            message = String.format(kickTemple, name, operatorName);
         }
         bot.sendGroupMsg(groupId.toString(), message);
         return "group decrease";

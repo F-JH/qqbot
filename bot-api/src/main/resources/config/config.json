@@ -84,6 +84,12 @@
       "注释": "interOrRepeat: true为打断鸡，false为复读机,打断鸡消息为interruptMsg"
     }
   },
+  "memberLeave": {
+    "330405140": {
+      "kickTemple": "【%s】被【%s】送走了~",
+      "leaveTemple": "【%s】离开了我们~"
+    }
+  },
   "BOTROOT": "http://127.0.0.1:5700",
   "imgUrlTemple": "https://gchat.qpic.cn/gchatpic_new/%s/%d-3212970209-%s/0?term=3"
 }

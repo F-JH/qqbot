@@ -142,7 +142,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         //TokenBasedRememberMeServices 里获取remember-me的方法只有 getParameter ，所以在不自定义TokenBasedRememberMeServices的情况下，需要在url上加上参数 ?remember-me=on
         TokenBasedRememberMeServices tokenBasedRememberMeServices = new TokenBasedRememberMeServices("qqbotAdmin", userService);
-        tokenBasedRememberMeServices.setTokenValiditySeconds(172800); // 令牌有效期两天
+//        tokenBasedRememberMeServices.setTokenValiditySeconds(172800); // 令牌有效期两天
+        tokenBasedRememberMeServices.setTokenValiditySeconds(30);
         loginFilter.setRememberMeServices(tokenBasedRememberMeServices);
 //        loginFilter.doFilter();
         return loginFilter;
