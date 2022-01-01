@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
+    // 登陆相关认证，登陆成功后的令牌是否有效不在此处
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException{
         if(!request.getMethod().equals("POST")){

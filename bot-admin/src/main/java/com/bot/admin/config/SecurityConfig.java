@@ -1,6 +1,8 @@
-package com.bot.admin.login.config;
+package com.bot.admin.config;
 
 import com.bot.admin.login.beans.RespBean;
+import com.bot.admin.login.config.LoginFilter;
+import com.bot.admin.login.config.MyAccessDeniedHandler;
 import com.bot.admin.login.mybatis.dao.admin.RoleDao;
 import com.bot.admin.login.mybatis.dao.admin.UserDao;
 import com.bot.admin.login.mybatis.impl.UserService;
@@ -22,6 +24,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -54,6 +57,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     PasswordEncoder encoder;
 
+    @Autowired
+    MyAccessDeniedHandler myAccessDeniedHandler;
+
+    @Autowired
+    MyAuthenticationEntryPoint myAuthenticationEntryPoint;
+
     @Bean
     PasswordEncoder passwordEncoder() {
 //        return NoOpPasswordEncoder.getInstance();
@@ -77,6 +86,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/user/**").hasRole("user")
                     .anyRequest().authenticated()
                     .and()
+                .exceptionHandling()
+                    .accessDeniedHandler(myAccessDeniedHandler)
+                    .and()
                 .formLogin()
                     .defaultSuccessUrl("/hello")
                     .permitAll()
@@ -87,6 +99,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                     .disable();
         http.addFilterAt(loginFilter(), UsernamePasswordAuthenticationFilter.class);
+        // 没有认证或认证过期失效时在这里处理，不重定向
+        http.exceptionHandling()
+                .authenticationEntryPoint(myAuthenticationEntryPoint);
     }
 
     @Bean

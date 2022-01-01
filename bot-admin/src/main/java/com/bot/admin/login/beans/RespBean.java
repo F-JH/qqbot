@@ -1,9 +1,9 @@
 package com.bot.admin.login.beans;
 
 public class RespBean {
-    private Integer status;
+    private Integer code;
     private String msg;
-    private Object userInfo;
+    private Object moreInfo;
 
     public static RespBean build() {
         return new RespBean();
@@ -13,33 +13,33 @@ public class RespBean {
         return new RespBean(200, msg, null);
     }
 
-    public static RespBean ok(String msg, Object userInfo) {
-        return new RespBean(200, msg, userInfo);
+    public static RespBean ok(String msg, Object moreInfo) {
+        return new RespBean(200, msg, moreInfo);
     }
 
     public static RespBean error(String msg) {
         return new RespBean(500, msg, null);
     }
 
-    public static RespBean error(String msg, Object userInfo) {
-        return new RespBean(500, msg, userInfo);
+    public static RespBean error(String msg, Object moreInfo) {
+        return new RespBean(500, msg, moreInfo);
     }
 
     private RespBean() {
     }
 
-    private RespBean(Integer status, String msg, Object userInfo) {
-        this.status = status;
+    private RespBean(Integer code, String msg, Object moreInfo) {
+        this.code = code;
         this.msg = msg;
-        this.userInfo = userInfo;
+        this.moreInfo = moreInfo;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Integer getCode() {
+        return code;
     }
 
-    public RespBean setStatus(Integer status) {
-        this.status = status;
+    public RespBean setCode(Integer code) {
+        this.code = code;
         return this;
     }
 
@@ -52,12 +52,12 @@ public class RespBean {
         return this;
     }
 
-    public Object getUserInfo() {
-        return userInfo;
+    public Object getMoreInfo() {
+        return moreInfo;
     }
 
-    public RespBean setObj(Object userInfo) {
-        this.userInfo = userInfo;
+    public RespBean setObj(Object moreInfo) {
+        this.moreInfo = moreInfo;
         return this;
     }
 }

@@ -1,0 +1,21 @@
+{
+  "code": 1002,
+  "message": "success",
+  "resultData": [
+    {
+      "menuid": 1,
+      "icon": "QqOutlined",
+      "menuname":"qqbot设置",
+      "url": null,
+      "menus": [
+        {
+          "menuid": 11,
+          "icon": "SettingOutlined",
+          "menuname": "config设置",
+          "url": "/index/config",
+          "menus": null
+        }
+      ]
+    }
+  ]
+}
