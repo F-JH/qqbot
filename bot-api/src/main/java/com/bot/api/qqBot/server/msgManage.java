@@ -236,10 +236,11 @@ public class msgManage {
         mainSignal.setAll(true);
     }
 
-    public Map<String, String> getAllThreadStatus(){
-        Map<String, String> result = new HashMap<>();
+    public Map<String, Boolean> getAllThreadStatus(){
+        Map<String, Boolean> result = new HashMap<>();
         for(Integer groupId:groupThreads.keySet())
-            result.put(groupId.toString(), String.valueOf(groupThreads.get(groupId).isAlive()));
+            result.put(groupId.toString(), groupThreads.get(groupId).isAlive());
+//            result.put(groupId.toString(), String.valueOf(groupThreads.get(groupId).isAlive()));
         return result;
     }
 

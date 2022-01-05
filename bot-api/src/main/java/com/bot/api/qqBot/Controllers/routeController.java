@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bot.api.qqBot.envGet;
 import com.bot.api.qqBot.mapper.postMethod;
+import com.bot.api.qqBot.scripts.CheckAlive;
 import com.bot.api.qqBot.server.msgManage;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import com.bot.api.qqBot.mybatis.service.groupMessageService;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -68,30 +70,6 @@ public class routeController{
         return "OK";
     }
 
-//    @RequestMapping(value = "/testInsert")
-//    public String show(){
-//        List<groupMessage> list = new ArrayList<>();
-//        for(Integer i=0; i<10; i++){
-//            groupMessage tmp = new groupMessage(
-//                    "groupId"+i,
-//                    "recall_"+i,
-//                    "messageId"+i,
-//                    "qq"+i,
-//                    "rawMessage"+i,
-//                    "imageUrl"+i,
-//                    new Date()
-//            );
-//            list.add(tmp);
-//        }
-//        try {
-//            groupMessageServiceMy.add("961530103", list);
-//            System.out.println("插入成功");
-//            return JSONObject.toJSONString(groupMessageServiceMy.findAll("961530103"));
-//        }catch(SQLException e){
-//            return "搞砸了";
-//        }
-//    }
-
     @RequestMapping(value = "/testData")
     public String test(String groupId){
         try{
@@ -116,8 +94,14 @@ public class routeController{
 
     @RequestMapping(value = "/checkThread")
     public Map<String, String> checkThread(String groupId){
-        if (groupId == null)
-            return manage.getAllThreadStatus();
+        if (groupId == null){
+            Map<String, Boolean> checkResult = manage.getAllThreadStatus();
+            Map<String, String> result = new HashMap<>();
+            for(String key:checkResult.keySet()){
+                result.put(key, checkResult.get(key).toString());
+            }
+            return result;
+        }
         else
             return manage.getGroupThreadStatus(groupId);
     }
