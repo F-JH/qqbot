@@ -2,9 +2,13 @@ package com.bot.api.qqBot.scripts;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static io.restassured.RestAssured.*;
 
@@ -47,5 +51,15 @@ public class botApi {
         Response res = get(botRoot + getStranger + String.format("?user_id=%s", user_id));
         String data = res.getBody().asString();
         return JSON.parseObject(data);
+    }
+
+    public JSONObject getChatbot(String msg){
+        Map<String, String> data = new HashMap<>();
+        data.put("msg", msg);
+        Response res = given()
+                .contentType(ContentType.JSON)
+                .body(JSON.toJSONString(data))
+                .post("http://127.0.0.1:9725");
+        return JSON.parseObject(res.getBody().asString());
     }
 }

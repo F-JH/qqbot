@@ -306,6 +306,7 @@ class groupMain extends Thread{
         long recordTime = new Date().getTime();
         boolean Repeater = true;
         int num;
+        int count = 0;
         boolean isExist;
         String recallOperator, messageId, userId, rawMessage, imageUrl, createDate, reply, userName;
         for(;;){
@@ -433,6 +434,16 @@ class groupMain extends Thread{
                             "\033[0m");
                 }else if(!rawMessage.equals(lastMsg))
                     Repeater = true;
+
+                count ++;
+                JSONObject chatbotConfig = configJson.getJSONObject("chatbot").getJSONObject(groupId.toString());
+                if(chatbotConfig != null && chatbotConfig.getInteger("TriggerTime").equals(count)){
+                    // 调用生成式chatbot
+                    JSONObject chat = bot.getChatbot(rawMessage);
+                    logger.info(String.format("chatbot: %s", chat.getString("message")));
+                    bot.sendGroupMsg(groupId.toString(), chat.getString("message"));
+                    count = 0;
+                }
             }
         }
     }
