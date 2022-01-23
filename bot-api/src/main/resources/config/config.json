@@ -92,7 +92,7 @@
   },
   "chatbot": {
     "961530103": {
-      "TriggerTime": 1
+      "TriggerTime": 2
     }
   },
   "BOTROOT": "http://127.0.0.1:5700",
