@@ -90,7 +90,12 @@
   },
   "chatbot": {
     "961530103": {
-      "TriggerTime": 2
+      "TriggerTime": 2,
+      "msgTemplate": "chatbot: %s"
+    },
+    "330405140": {
+      "TriggerTime": 100,
+      "msgTemplate": "%s"
     }
   },
   "BOTROOT": "http://127.0.0.1:5700",

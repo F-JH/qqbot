@@ -437,11 +437,11 @@ class groupMain extends Thread{
 
                 count ++;
                 JSONObject chatbotConfig = configJson.getJSONObject("chatbot").getJSONObject(groupId.toString());
-                if(chatbotConfig != null && chatbotConfig.getInteger("TriggerTime").equals(count)){
+                if(chatbotConfig != null && count % chatbotConfig.getInteger("TriggerTime") == 0){
                     // 调用生成式chatbot
                     JSONObject chat = bot.getChatbot(rawMessage);
                     logger.info(String.format("chatbot: %s", chat.getString("message")));
-                    bot.sendGroupMsg(groupId.toString(), chat.getString("message"));
+                    bot.sendGroupMsg(groupId.toString(), String.format(configJson.getString("msgTemplate"), chat.getString("message")));
                     count = 0;
                 }
             }
