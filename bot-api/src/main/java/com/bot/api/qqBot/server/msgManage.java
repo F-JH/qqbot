@@ -440,13 +440,15 @@ class groupMain extends Thread{
                     Repeater = true;
 
                 count ++;
-                JSONObject chatbotConfig = configJson.getJSONObject("chatbot").getJSONObject(groupId.toString());
-                if(chatbotConfig != null && count % chatbotConfig.getInteger("TriggerTime") == 0){
-                    // 调用生成式chatbot
-                    JSONObject chat = bot.getChatbot(rawMessage);
-                    logger.info(String.format("chatbot: %s", chat.getString("message")));
-                    bot.sendGroupMsg(groupId.toString(), String.format(chatbotConfig.getString("msgTemplate"), chat.getString("message")));
-                    count = 0;
+                if(!rawMessage.equals("")){
+                    JSONObject chatbotConfig = configJson.getJSONObject("chatbot").getJSONObject(groupId.toString());
+                    if(chatbotConfig != null && count >= chatbotConfig.getInteger("TriggerTime")){
+                        // 调用生成式chatbot
+                        JSONObject chat = bot.getChatbot(rawMessage);
+                        logger.info(String.format("chatbot: %s", chat.getString("message")));
+                        bot.sendGroupMsg(groupId.toString(), String.format(chatbotConfig.getString("msgTemplate"), chat.getString("message")));
+                        count = 0;
+                    }
                 }
             }
         }
