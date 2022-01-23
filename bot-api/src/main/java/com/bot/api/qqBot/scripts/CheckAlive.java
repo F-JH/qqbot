@@ -43,6 +43,7 @@ public class CheckAlive{
                         "961530103",
                         String.format("检测到【%s】群被敌方入侵，已失去联系！", configJson.getJSONObject("focusGroup").getString(groupId))
                 );
+                manage.removeDeadThread(Integer.valueOf(groupId));
             }
         }
     }

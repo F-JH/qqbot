@@ -244,6 +244,10 @@ public class msgManage {
         return result;
     }
 
+    public void removeDeadThread(Integer groupId){
+        groupThreads.remove(groupId);
+    }
+
     public Map<String, String> getGroupThreadStatus(String groupId){
         Map<String, String> result = new HashMap<>();
         try{
@@ -441,7 +445,7 @@ class groupMain extends Thread{
                     // 调用生成式chatbot
                     JSONObject chat = bot.getChatbot(rawMessage);
                     logger.info(String.format("chatbot: %s", chat.getString("message")));
-                    bot.sendGroupMsg(groupId.toString(), String.format(configJson.getString("msgTemplate"), chat.getString("message")));
+                    bot.sendGroupMsg(groupId.toString(), String.format(chatbotConfig.getString("msgTemplate"), chat.getString("message")));
                     count = 0;
                 }
             }
