@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bot.api.qqBot.envGet;
 import com.bot.api.qqBot.mybatis.service.groupMessageService;
+import com.bot.api.qqBot.scripts.GetConfig;
 import io.restassured.response.Response;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -375,6 +376,27 @@ class groupMain extends Thread{
             tmpMsg.add(imageUrl);
             tmpMsg.add(createDate);
             tmpMsg.add(userName);
+
+            JSONObject configTmp = GetConfig.config(env);
+            if(configTmp!=null && reply.equals(configTmp.getString("bot_qq"))){
+                // 响应式chatbot
+                String reMessage = "";
+                botApi bot = new botApi(configTmp.getString("BOTROOT"));
+                if(rawMessage.equals("") && !imageUrl.equals("")){
+                    // 仅图片
+                    reMessage = "在下双眼已瞎，看不到图";
+                }else if(rawMessage.equals("") && imageUrl.equals("")){
+                    // 全空
+                    reMessage = "什么事？";
+                }else{
+                    // 仅文字or文字+图片，触发生成式chatbot
+                    JSONObject chatbotConfig = configTmp.getJSONObject("chatbot").getJSONObject(groupId.toString());
+                    JSONObject chat = bot.getChatbot(rawMessage);
+                    logger.info(String.format("chatbot: %s", chat.getString("message")));
+                    reMessage = String.format(chatbotConfig.getString("msgTemplate"), chat.getString("message"));
+                }
+                bot.sendGroupMsg(groupId.toString(), reMessage);
+            }
 
             if(!reply.equals("") && num > 0){
                 isExist = false;
