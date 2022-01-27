@@ -128,7 +128,9 @@ public class msgManage {
         String reply = "";
         String now = String.valueOf(new Date().getTime());
         String userName = "";
+        String at = "";
 
+        Pattern atPattern = Pattern.compile("qq=(.*?)\\]");
         Pattern replyPattern = Pattern.compile("id=(.*?)\\]");
         Pattern imagePattern = Pattern.compile("url=(.*?)\\,");
         Pattern imageType = Pattern.compile("type=(.*?)\\,");
@@ -164,14 +166,20 @@ public class msgManage {
         while(m.find())
             cqMatch.add(m.group(1));
         for(String s:cqMatch){
+            if(s.contains("CQ:at")){
+                // at某人
+                Matcher atCher = atPattern.matcher(s);
+                if(atCher.find())
+                    at = atCher.group(1);
+            }
             // reply 提及
-            if(s.contains("reply")){
+            if(s.contains("CQ:reply")){
                 Matcher replyCher = replyPattern.matcher(s);
                 if(replyCher.find())
                     reply = replyCher.group(1);
             }
             // image 包含一个或多个图片
-            if(s.contains("image")){
+            if(s.contains("CQ:image")){
                 Matcher typeCher = imageType.matcher(s);
                 if(typeCher.find()){
                     // 闪照
@@ -208,6 +216,7 @@ public class msgManage {
         result.add(now);
         result.add(reply);
         result.add(userName);
+        result.add(at);
         return result;
     }
 
@@ -313,7 +322,7 @@ class groupMain extends Thread{
         int num;
         int count = 0;
         boolean isExist;
-        String recallOperator, messageId, userId, rawMessage, imageUrl, createDate, reply, userName;
+        String recallOperator, messageId, userId, rawMessage, imageUrl, createDate, reply, userName, at;
         for(;;){
             // 处理 save message signal
             if(mySignal.isSaveMessage(groupId)){
@@ -341,6 +350,7 @@ class groupMain extends Thread{
             createDate = sample.get(5);
             reply = sample.get(6);
             userName = sample.get(7);
+            at = sample.get(8);
 
             // 处理撤回
             if(!recallOperator.equals("")){
@@ -378,7 +388,7 @@ class groupMain extends Thread{
             tmpMsg.add(userName);
 
             JSONObject configTmp = GetConfig.config(env);
-            if(configTmp!=null && reply.equals(configTmp.getString("bot_qq"))){
+            if(configTmp!=null && at.equals(configTmp.getString("bot_qq"))){
                 // 响应式chatbot
                 String reMessage = "";
                 botApi bot = new botApi(configTmp.getString("BOTROOT"));
