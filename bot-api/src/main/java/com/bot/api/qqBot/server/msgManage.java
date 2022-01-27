@@ -95,6 +95,7 @@ public class msgManage {
                     tmp.add(handleResult.get(5));
                     tmp.add(handleResult.get(6));
                     tmp.add(handleResult.get(7));
+                    tmp.add(handleResult.get(8));
 //                groupQueue.offer(JSONObject.parseArray(JSONObject.toJSONString(tmp)));
                     groupQueue.add(tmp);
                 }
