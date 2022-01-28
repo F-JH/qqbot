@@ -26,7 +26,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="95cd9b4d-7113-45a2-8809-a1bcaa54a848">
-        <schema name="act_change" object-types="table" />
+        <schema name="act_change" object-types="table, view" />
       </connection>
     </loaded-nodes>
   </component>
