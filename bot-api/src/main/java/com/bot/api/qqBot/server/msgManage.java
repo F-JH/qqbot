@@ -130,6 +130,7 @@ public class msgManage {
         String now = String.valueOf(new Date().getTime());
         String userName = "";
         String at = "";
+        List<String> ats = new ArrayList<>();
 
         Pattern atPattern = Pattern.compile("qq=(.*?)\\]");
         Pattern replyPattern = Pattern.compile("id=(.*?)\\]");
@@ -139,7 +140,7 @@ public class msgManage {
 
         messageId = msgJson.getLong("message_id").toString();
         recallOperatorc = msgJson.getString("operator_id");
-        String img;
+//        String img;
 
         // 被撤回消息
         if(recallOperatorc != null){
@@ -172,7 +173,7 @@ public class msgManage {
                 // at某人
                 Matcher atCher = atPattern.matcher(s);
                 if(atCher.find())
-                    at = atCher.group(1);
+                    ats.add(atCher.group(1));
             }
             // reply 提及
             if(s.contains("CQ:reply")){
@@ -202,6 +203,7 @@ public class msgManage {
             }
             rawMessage = rawMessage.replace(s, "");
         }
+        at = String.join(",", ats);
         rawMessage = rawMessage.replace(",", "，");
 
 
@@ -390,7 +392,8 @@ class groupMain extends Thread{
             tmpMsg.add(userName);
 
             JSONObject configTmp = GetConfig.config(env);
-            if(configTmp!=null && at.equals(configTmp.getString("bot_qq"))){
+            List<String> ats = Arrays.asList(at.split(","));
+            if(configTmp!=null && ats.contains(configTmp.getString("bot_qq"))){
                 // 响应式chatbot
                 String reMessage = "";
                 botApi bot = new botApi(configTmp.getString("BOTROOT"));
