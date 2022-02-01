@@ -418,6 +418,7 @@ class groupMain extends Thread{
                     JSONObject chat = bot.getChatbot(copyMessage);
                     logger.info(String.format("chatbot: %s", chat.getString("message")));
                     reMessage = String.format(chatbotConfig.getString("msgTemplate"), chat.getString("message"));
+                    reMessage = reMessage.substring(0, Math.min(15, reMessage.length()));
                 }
                 bot.sendGroupMsg(groupId.toString(), reMessage);
             }
@@ -500,7 +501,9 @@ class groupMain extends Thread{
                         // 调用生成式chatbot
                         JSONObject chat = bot.getChatbot(rawMessage);
                         logger.info(String.format("chatbot: %s", chat.getString("message")));
-                        bot.sendGroupMsg(groupId.toString(), String.format(chatbotConfig.getString("msgTemplate"), chat.getString("message")));
+                        String reMessage = chat.getString("message");
+                        reMessage = reMessage.substring(0, Math.min(15, reMessage.length()));
+                        bot.sendGroupMsg(groupId.toString(), String.format(chatbotConfig.getString("msgTemplate"), reMessage));
                         count = 0;
                     }
                 }
