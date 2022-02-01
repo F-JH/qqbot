@@ -405,8 +405,17 @@ class groupMain extends Thread{
                     reMessage = "什么事？";
                 }else{
                     // 仅文字or文字+图片，触发生成式chatbot
+                    String copyMessage = rawMessage;
                     JSONObject chatbotConfig = configTmp.getJSONObject("chatbot").getJSONObject(groupId.toString());
-                    JSONObject chat = bot.getChatbot(rawMessage);
+                    Pattern startSpacePattern = Pattern.compile("^ +");
+                    Pattern endSpacePattern = Pattern.compile(" +$");
+                    Matcher startSpace = startSpacePattern.matcher(copyMessage);
+                    if(startSpace.find())
+                        copyMessage = copyMessage.substring(startSpace.end());
+                    Matcher endSpace = endSpacePattern.matcher(copyMessage);
+                    if(endSpace.find())
+                        copyMessage = copyMessage.substring(0, endSpace.start());
+                    JSONObject chat = bot.getChatbot(copyMessage);
                     logger.info(String.format("chatbot: %s", chat.getString("message")));
                     reMessage = String.format(chatbotConfig.getString("msgTemplate"), chat.getString("message"));
                 }
