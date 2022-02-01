@@ -489,6 +489,14 @@ class groupMain extends Thread{
                 if(!rawMessage.equals("")){
                     JSONObject chatbotConfig = configJson.getJSONObject("chatbot").getJSONObject(groupId.toString());
                     if(chatbotConfig != null && count >= chatbotConfig.getInteger("TriggerTime")){
+                        Pattern startSpacePattern = Pattern.compile("^ +");
+                        Pattern endSpacePattern = Pattern.compile(" +$");
+                        Matcher startSpace = startSpacePattern.matcher(rawMessage);
+                        if(startSpace.find())
+                            rawMessage = rawMessage.substring(startSpace.end());
+                        Matcher endSpace = endSpacePattern.matcher(rawMessage);
+                        if(endSpace.find())
+                            rawMessage = rawMessage.substring(0, endSpace.start());
                         // 调用生成式chatbot
                         JSONObject chat = bot.getChatbot(rawMessage);
                         logger.info(String.format("chatbot: %s", chat.getString("message")));
