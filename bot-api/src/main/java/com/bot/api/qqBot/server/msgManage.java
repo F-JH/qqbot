@@ -417,8 +417,8 @@ class groupMain extends Thread{
                         copyMessage = copyMessage.substring(0, endSpace.start());
                     JSONObject chat = bot.getChatbot(copyMessage);
                     logger.info(String.format("chatbot: %s", chat.getString("message")));
-                    reMessage = String.format(chatbotConfig.getString("msgTemplate"), chat.getString("message"));
-                    reMessage = reMessage.substring(0, Math.min(15, reMessage.length()));
+                    reMessage = chat.getString("message");
+                    reMessage = String.format(chatbotConfig.getString("msgTemplate"), reMessage.substring(0, Math.min(15, reMessage.length())));
                 }
                 bot.sendGroupMsg(groupId.toString(), reMessage);
             }
