@@ -12,10 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
 
 import com.bot.server.qqBot.mybatis.service.groupMessageService;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -107,12 +104,6 @@ public class routeController{
 
     @RequestMapping(value = "/test")
     public String test(String id){
-//        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-//        if(requestAttributes!=null){
-//            HttpServletRequest request = requestAttributes.getRequest();
-//            JSONObject.toJSONString(request.getParameterMap());
-//            System.out.println(request.getRequestURI());
-//        }
         String key = "test";
         System.out.println(this);
         System.out.println(id);
