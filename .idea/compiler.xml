@@ -7,12 +7,18 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="bot-api" />
+        <module name="public-service" />
+        <module name="bot-server" />
         <module name="bot-admin" />
+        <module name="bot-mq" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bot-admin" target="11" />
       <module name="bot-api" target="11" />
+      <module name="bot-mq" target="11" />
+      <module name="bot-server" target="11" />
+      <module name="public-service" target="11" />
       <module name="qqbot" target="11" />
     </bytecodeTargetLevel>
   </component>
@@ -20,6 +26,9 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="bot-admin" options="-parameters" />
       <module name="bot-api" options="-parameters" />
+      <module name="bot-mq" options="-parameters" />
+      <module name="bot-server" options="-parameters" />
+      <module name="public-service" options="-parameters" />
       <module name="qqbot" options="-parameters" />
     </option>
   </component>

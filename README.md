@@ -10,14 +10,14 @@ SpringBoot写的qqbot
 `mvn clean`  
 `mvn package`  
 生成jar文件：   
-`bot-api/target/bot-api-xxx.jar`  
+`bot-server/target/bot-api-xxx.jar`  
 `bot-admin/target/bot-admin-xxx.jar (还没弄好)`
 
 ## bot-api
 
 配置文件:
 
-    bot-api/src/main/resources/下的三个application yml文件;
+    bot-server/src/main/resources/下的三个application yml文件;
     其中 dev版本是测试环境，prod版本是生产环境
     Spring.datasource: 自行设置mysql配置
     注意：prod版的logging.config需要自行修改，根据自己的路径来，定位到resources/cofnig/logback.xml
@@ -27,7 +27,7 @@ SpringBoot写的qqbot
 
 
 运行(建议在根目录下运行)：   
-`java -jar bot-api/target/bot-api-xxx.jar --spring.profiles.active=dev --env=test`  
+`java -jar bot-server/target/bot-api-xxx.jar --spring.profiles.active=dev --env=test`  
     
     spring.profiles.active: 使用那个环境的application.yml 
     env: 决定一个外部配置文件的路径，具体可以看 com.bot.api.qqBot.envGet
@@ -35,7 +35,7 @@ SpringBoot写的qqbot
 外部配置：  
 
     这是一个外部配置文件，这意味着你可以动态修改它，实时生效
-    配置文件路径：bot-api/src/resources/config/config.json
+    配置文件路径：bot-server/src/resources/config/config.json
     详细说明：
         focusGroup：关注的群号，只有这些群消息才会被处理，key(群号)，vlaue(群名，自己填)
         recall：撤回消息，key(群号),value(一个列表，表示关注的执行撤回对象是谁，qq号，用于标记是否是涉黄/垃圾消息)

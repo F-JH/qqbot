@@ -4,6 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/bot-admin/bot-admin.iml" filepath="$PROJECT_DIR$/bot-admin/bot-admin.iml" />
       <module fileurl="file://$PROJECT_DIR$/bot-api/bot-api.iml" filepath="$PROJECT_DIR$/bot-api/bot-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bot-mq/bot-mq.iml" filepath="$PROJECT_DIR$/bot-mq/bot-mq.iml" />
+      <module fileurl="file://$PROJECT_DIR$/bot-server/bot-server.iml" filepath="$PROJECT_DIR$/bot-server/bot-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/public-service/public-service.iml" filepath="$PROJECT_DIR$/public-service/public-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/qqbot.iml" filepath="$PROJECT_DIR$/qqbot.iml" />
     </modules>
   </component>

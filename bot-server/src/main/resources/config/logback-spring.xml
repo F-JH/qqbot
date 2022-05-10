@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration debug="false" scan="true" scanPeriod="30 seconds">
+    <!-- 存放日志文件路径  该 <springProperty> 标签允许我们从Spring中显示属性-->
+    <springProperty scope="context" name="spring.application.name" source="spring.application.name"/>
+    <springProperty scope="context" name="spring.profiles.active" source="spring.profiles.active"/>
+    <springProperty scope="context" name="log.path" source="logback.file-path" defaultValue="/Users/xiaoandi/qqbot/bot-log"/>
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!-- @formatter:off -->
+            <pattern>%boldCyan(%date{yyyy-MM-dd HH:mm:ss.SSS}) %highlight(%-5level) %boldYellow([%thread]) %boldMagenta(%logger{36}) %msg%n</pattern>
+            <!-- @formatter:on -->
+        </layout>
+    </appender>
+
+    <!-- INFO 文件输出 -->
+    <appender name="FILE_INFO_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} %msg%n</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/${spring.application.name}/log-info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>2048MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- ERROR 文件输出 -->
+    <appender name="FILE_ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <Pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} %msg%n</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${log.path}/${spring.application.name}/log-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>15</maxHistory>
+            <maxFileSize>100MB</maxFileSize>
+            <totalSizeCap>1024MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+
+    <!-- 异步 INFO 文件输出 -->
+    <appender name="FILE_INFO_APPENDER_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="FILE_INFO_APPENDER"/>
+    </appender>
+
+    <!-- 异步 ERROR 文件输出 -->
+    <appender name="FILE_ERROR_APPENDER_ASYNC" class="ch.qos.logback.classic.AsyncAppender">
+        <discardingThreshold>0</discardingThreshold>
+        <queueSize>256</queueSize>
+        <neverBlock>true</neverBlock>
+        <appender-ref ref="FILE_ERROR_APPENDER"/>
+    </appender>
+
+    <!-- com.hiido.services log level : info -->
+<!--    <logger name="com.hiido.services" level="info"/>-->
+<!--    <logger name="com.hiido.mappers" level="debug"/>-->
+
+    <!-- 开发环境 -->
+    <springProfile name="default | dev">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+        </root>
+    </springProfile>
+
+    <!-- 测试，预发，正式环境 -->
+    <springProfile name="test | pre-prod | prod">
+        <root level="INFO">
+            <appender-ref ref="CONSOLE_APPENDER"/>
+            <appender-ref ref="FILE_INFO_APPENDER_ASYNC"/>
+            <appender-ref ref="FILE_ERROR_APPENDER_ASYNC"/>
+        </root>
+    </springProfile>
+
+</configuration>

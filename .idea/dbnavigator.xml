@@ -24,11 +24,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="95cd9b4d-7113-45a2-8809-a1bcaa54a848">
-        <schema name="act_change" object-types="table, view" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591">
@@ -130,7 +126,7 @@ values
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" active="true">
+      <connection id="4fa2ebc4-b4b5-4ecd-a095-d674f8342591" active="true" signed="true">
         <database>
           <name value="JoyyDataTest" />
           <description value="聚数平台测试环境数据库" />
@@ -214,7 +210,7 @@ values
           <object-name-filters />
         </object-filters>
       </connection>
-      <connection id="41ab99ce-f002-4e60-b48f-e28f7fed9af4" active="true">
+      <connection id="41ab99ce-f002-4e60-b48f-e28f7fed9af4" active="true" signed="true">
         <database>
           <name value="qqbotAdmin" />
           <description value="qqbot的后台系统" />
@@ -298,7 +294,7 @@ values
           <object-name-filters />
         </object-filters>
       </connection>
-      <connection id="9be6ad10-c9fc-4be1-8bc4-972714e8fef8" active="true">
+      <connection id="9be6ad10-c9fc-4be1-8bc4-972714e8fef8" active="true" signed="true">
         <database>
           <name value="qqbotAdmin" />
           <description value="qqbot后台" />
@@ -382,7 +378,7 @@ values
           <object-name-filters />
         </object-filters>
       </connection>
-      <connection id="95cd9b4d-7113-45a2-8809-a1bcaa54a848" active="true">
+      <connection id="95cd9b4d-7113-45a2-8809-a1bcaa54a848" active="true" signed="true">
         <database>
           <name value="埋点数据质量" />
           <description value="" />
