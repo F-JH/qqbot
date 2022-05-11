@@ -65,6 +65,11 @@
             <artifactId>rest-assured</artifactId>
             <version>4.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>json-path</artifactId>
+            <version>4.4.0</version>
+        </dependency>
 
 <!--        WebSocket依赖-->
         <dependency>
