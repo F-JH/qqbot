@@ -102,7 +102,7 @@ public class routeController{
         return result;
     }
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = {"/test1", "/test2"})
     public String test(String id){
         String key = "test";
         System.out.println(this);
