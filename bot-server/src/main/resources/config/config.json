@@ -96,15 +96,15 @@
       "msgTemplate": "chatbot: %s"
     },
     "330405140": {
-      "TriggerTime": 66,
+      "TriggerTime": 666,
       "msgTemplate": "%s"
     },
     "679787308": {
-      "TriggerTime": 150,
+      "TriggerTime": 150000,
       "msgTemplate": "%s"
     },
     "747819422": {
-      "TriggerTime": 200,
+      "TriggerTime": 200000,
       "msgTemplate": "%s"
     }
   },
