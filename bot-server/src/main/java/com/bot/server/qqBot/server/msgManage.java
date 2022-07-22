@@ -418,7 +418,7 @@ class groupMain extends Thread{
                     logger.info(String.format("chatbot: %s", chat.getString("message")));
                     reMessage = chat.getString("message");
                     if(copyMessage.startsWith("你是") || copyMessage.startsWith("你吃")){
-                        reMessage = "你才是" + copyMessage.substring(2) + "，我是天才！";
+                        reMessage = "你才是" + copyMessage.substring(2);
                     }
                     reMessage = String.format(chatbotConfig.getString("msgTemplate"), reMessage.substring(0, Math.min(15, reMessage.length())));
                 }
