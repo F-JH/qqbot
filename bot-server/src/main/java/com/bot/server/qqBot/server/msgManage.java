@@ -47,6 +47,7 @@ public class msgManage {
     }
 
     public void put(Integer groupId, JSONObject msgJson, JSONObject configJson) throws InterruptedException{
+        System.out.println("ss");
         ConcurrentLinkedQueue<List<String>> groupQueue;
         if(!messageData.checkQueue(groupId)){
             // 启动新的线程、队列等
@@ -250,6 +251,7 @@ public class msgManage {
     }
 
     public Map<String, Boolean> getAllThreadStatus(){
+        System.out.println("aa");
         Map<String, Boolean> result = new HashMap<>();
         for(Integer groupId:groupThreads.keySet())
             result.put(groupId.toString(), groupThreads.get(groupId).isAlive());
@@ -417,6 +419,9 @@ class groupMain extends Thread{
                     JSONObject chat = bot.getChatbot(copyMessage);
                     logger.info(String.format("chatbot: %s", chat.getString("message")));
                     reMessage = chat.getString("message");
+                    if(copyMessage.startsWith("你是") || copyMessage.startsWith("你吃")){
+                        reMessage = "你才是" + copyMessage.substring(2) + "，我是天才！";
+                    }
                     reMessage = String.format(chatbotConfig.getString("msgTemplate"), reMessage.substring(0, Math.min(15, reMessage.length())));
                 }
                 bot.sendGroupMsg(groupId.toString(), reMessage);
@@ -541,11 +546,20 @@ class groupMain extends Thread{
             msgs.add(gm);
         }
         try{
+            System.out.println("ha");
             gms.add(groupId.toString(), msgs);
             System.out.println(String.format("%d Save %d message to mysql success", groupId, num));
             tmp.clear();
         }catch(SQLException e){
             logger.info("[" + groupId + "]" + "线程自动插入出错：", e);
+        }
+    }
+
+    public envGet testtt(envGet a){
+        return a;
+    }
+    private static class myName{
+        public void test(){
         }
     }
 }

@@ -9,7 +9,8 @@ public class manageSignal {
 
     public void setAll(boolean saveMessage){
         for(Integer key:saveMessageSignal.keySet()){
-            saveMessageSignal.put(key, saveMessage);
+//            saveMessageSignal.put(key, saveMessage);
+            System.out.println("sss");
         }
     }
 
