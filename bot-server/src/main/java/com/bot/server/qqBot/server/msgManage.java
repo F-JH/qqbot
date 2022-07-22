@@ -47,7 +47,6 @@ public class msgManage {
     }
 
     public void put(Integer groupId, JSONObject msgJson, JSONObject configJson) throws InterruptedException{
-        System.out.println("ss");
         ConcurrentLinkedQueue<List<String>> groupQueue;
         if(!messageData.checkQueue(groupId)){
             // 启动新的线程、队列等
@@ -251,7 +250,6 @@ public class msgManage {
     }
 
     public Map<String, Boolean> getAllThreadStatus(){
-        System.out.println("aa");
         Map<String, Boolean> result = new HashMap<>();
         for(Integer groupId:groupThreads.keySet())
             result.put(groupId.toString(), groupThreads.get(groupId).isAlive());
